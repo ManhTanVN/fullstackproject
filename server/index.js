@@ -15,6 +15,6 @@ const usersRouter = require('./routes/Users');
 app.use('/auth', usersRouter);
 db.sequelize.sync().then(() => {
   app.listen(3006, () => {
-    console.log('App is running on port 3006');
+    console.log('App is running on port 3006...');
   });
 });
