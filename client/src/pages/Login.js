@@ -14,10 +14,13 @@ function Login() {
   const login = () => {
     const data = { username: username, password: password };
     axios.post('http://localhost:3006/auth/login', data).then((response) => {
-      if (response.data.error) alert(response.data.error);
-      sessionStorage.setItem('accessToken', response.data);
-      setAuthState(true);
-      navigate('/');
+      if (response.data.error) {
+        alert(response.data.error);
+      } else {
+        sessionStorage.setItem('accessToken', response.data);
+        setAuthState(true);
+        navigate('/');
+      }
     });
   };
   return (

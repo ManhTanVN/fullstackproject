@@ -21,14 +21,18 @@ router.post('/login', async (req, res) => {
 
   const user = await Users.findOne({ where: { username: username } });
 
-  if (!user) res.json({ error: "User Doesn't Exist" });
-
-  bcrypt.compare(password, user.password).then((match) => {
-    if (!match) res.json({ error: 'Wrong Username And Password Combination' });
-
-    const accessToken = sign({ username: user.username, id: user.id }, 'importantsecret');
-    res.json(accessToken);
-  });
+  if (!user) {
+    res.json({ error: "User Doesn't Exist" });
+  } else {
+    bcrypt.compare(password, user.password).then((match) => {
+      if (!match) {
+        res.json({ error: 'Wrong Username And Password Combination' });
+      } else {
+        const accessToken = sign({ username: user.username, id: user.id }, 'importantsecret');
+        res.json(accessToken);
+      }
+    });
+  }
 });
 
 router.get('/auth', validateToken, async (req, res) => {

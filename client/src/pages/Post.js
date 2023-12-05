@@ -68,18 +68,6 @@ function Post() {
         </div>
         <div className="listOfComments">
           {comments.map((comment, key) => {
-            if (comment.commentBody.indexOf('Mai có hâm không') !== -1) {
-              return (
-                <>
-                  <div key={key} className="comment">
-                    {comment.commentBody}
-                  </div>
-                  <div key={key} className="comment">
-                    Có Mai rất hâm! rất rất hâm
-                  </div>
-                </>
-              );
-            }
             return (
               <div key={key} className="comment">
                 {comment.commentBody}
