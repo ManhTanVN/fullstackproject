@@ -18,33 +18,37 @@ function Home() {
   const likeAPost = (postId, event) => {
     event.stopPropagation();
     event.preventDefault();
-    axios
-      .post(
-        'http://localhost:3006/likes',
-        { PostId: postId },
-        { headers: { accessToken: sessionStorage.getItem('accessToken') } },
-      )
-      .then((response) => {
-        setListOfPosts(
-          listOfPosts.map((post) => {
-            if (post.id === postId) {
-              if (response.data.liked) {
-                return {
-                  ...post,
-                  Likes: [...post.Likes, { PostId: response.data.PostId, UserId: response.data.UserId }],
-                };
+    if (authState.status) {
+      axios
+        .post(
+          'http://localhost:3006/likes',
+          { PostId: postId },
+          { headers: { accessToken: sessionStorage.getItem('accessToken') } },
+        )
+        .then((response) => {
+          setListOfPosts(
+            listOfPosts.map((post) => {
+              if (post.id === postId) {
+                if (response.data.liked) {
+                  return {
+                    ...post,
+                    Likes: [...post.Likes, { PostId: response.data.PostId, UserId: response.data.UserId }],
+                  };
+                } else {
+                  const likesArray = post.Likes.filter((like) => {
+                    return like.PostId !== response.data.PostId && like.UserId !== response.data.UserId;
+                  });
+                  return { ...post, Likes: likesArray };
+                }
               } else {
-                const likesArray = post.Likes.filter((like) => {
-                  return like.PostId !== response.data.PostId && like.UserId !== response.data.UserId;
-                });
-                return { ...post, Likes: likesArray };
+                return post;
               }
-            } else {
-              return post;
-            }
-          }),
-        );
-      });
+            }),
+          );
+        });
+    } else {
+      alert('Please login to like the post');
+    }
   };
 
   return (
@@ -69,7 +73,7 @@ function Home() {
                     likeAPost(value.id, event);
                   }}
                   className={
-                    typeof value.Likes.find((like) => like.UserId === authState.id) !== 'undefined'
+                    typeof value.Likes.find((like) => like.UserId === authState.id) !== 'undefined' && authState.status
                       ? 'unlikeBttn'
                       : 'likeBttn'
                   }
