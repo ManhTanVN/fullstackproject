@@ -21,7 +21,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function App() {
-  const [authState, setAuthState] = useState({ username: '', id: 0, status: false });
+  const [authState, setAuthState] = useState({
+    username: '',
+    id: 0,
+    status: typeof sessionStorage.getItem('accessToken') === 'string',
+  });
   useEffect(() => {
     axios
       .get('http://localhost:3006/auth/auth', { headers: { accessToken: sessionStorage.getItem('accessToken') } })
@@ -51,10 +55,13 @@ function App() {
                 <Link to="/registration">Registration</Link>
               </>
             ) : (
-              <button onClick={logout}>Logout</button>
+              <>
+                <div className="loggedInContainer">
+                  <h1>{authState.username}</h1>
+                  <button onClick={logout}>Logout</button>
+                </div>
+              </>
             )}
-
-            <h1>{authState.username}</h1>
           </div>
           <Routes>
             <Route path="/" exact element={<Home />} />

@@ -11,11 +11,12 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const login = () => {
+  const login = (e) => {
+    e.preventDefault();
     const data = { username: username, password: password };
     axios.post('http://localhost:3006/auth/login', data).then((response) => {
       if (response.data.error) {
-        alert(response.data.error);
+        alert('Your username or password is wrong! \nPlease register first if you do not have any account');
       } else {
         sessionStorage.setItem('accessToken', response.data.token);
         setAuthState({ username: response.data.username, id: response.data.id, status: true });
@@ -24,7 +25,7 @@ function Login() {
     });
   };
   return (
-    <div className="loginContainer">
+    <form className="loginContainer" onSubmit={login}>
       <label>Username:</label>
       <input
         type="text"
@@ -40,8 +41,8 @@ function Login() {
         }}
       />
 
-      <button onClick={login}> Login </button>
-    </div>
+      <button onClick={login}>Login</button>
+    </form>
   );
 }
 

@@ -29,14 +29,14 @@ function Registration() {
         <Form className="formContainer">
           <label>Username: </label>
           <ErrorMessage name="username" component="span" />
-          <Field autocomplete="off" id="inputCreatePost" name="username" placeholder="(Ex. John123...)" />
+          <Field autoComplete="off" id="inputUsernameCreatePost" name="username" placeholder="(Ex. John123...)" />
 
           <label>Password: </label>
           <ErrorMessage name="password" component="span" />
           <Field
-            autocomplete="off"
+            autoComplete="off"
             type="password"
-            id="inputCreatePost"
+            id="inputPasswordCreatePost"
             name="password"
             placeholder="Your Password..."
           />
