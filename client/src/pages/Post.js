@@ -72,7 +72,7 @@ function Post() {
           <div className="title"> {postObject.title} </div>
           <div className="body">{postObject.postText}</div>
           <div className="footer">
-            {postObject.userName}
+            <span>{postObject.userName}</span>
             {authState.status && authState.username === postObject.userName && (
               <button
                 onClick={() => {

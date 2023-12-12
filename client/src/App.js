@@ -15,6 +15,8 @@ import CreatePost from './pages/CreatePost';
 import Post from './pages/Post';
 import Login from './pages/Login';
 import Registration from './pages/Registration';
+import ChangePassword from './pages/ChangePassword';
+import Profile from './pages/Profile';
 
 import { AuthContext } from './helpers/AuthContext';
 import { useState, useEffect } from 'react';
@@ -69,6 +71,7 @@ function App() {
             <Route path="/post/:id" exact element={<Post />} />
             <Route path="/login" exact element={<Login />} />
             <Route path="/registration" exact element={<Registration />} />
+            <Route path="/changepassword" exact element={<ChangePassword />} />
           </Routes>
         </Router>
       </AuthContext.Provider>
